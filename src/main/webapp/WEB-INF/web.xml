@@ -13,9 +13,19 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>/WEB-INF/applicationContext.xml</param-value>
     </context-param>
+<!--    <context-param>-->
+<!--        <param-name>mybstisConfigLocation</param-name>-->
+<!--        <param-value>classpath:spring/spring-mybatis.xml</param-value>-->
+<!--    </context-param>-->
+<!--    <context-param>-->
+<!--        <param-name>baseConfigLocation</param-name>-->
+<!--        <param-value>classpath:spring/spring-base.xml</param-value>-->
+<!--    </context-param>-->
+
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
     <servlet>
         <servlet-name>dispatcher</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -29,5 +39,20 @@
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+    <servlet-name>springMVC</servlet-name>
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <init-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>classpath:spring/spring-webSocket.xml</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+    <async-supported>true</async-supported>
+</servlet>
+    <servlet-mapping>
+        <servlet-name>springMVC</servlet-name>
+        <url-pattern>/socket</url-pattern>
     </servlet-mapping>
 </web-app>
