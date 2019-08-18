@@ -2,13 +2,9 @@ package cn.knightapple.dao;
 
 import cn.knightapple.entity.Person;
 import cn.knightapple.entity.PersonExample;
+import org.apache.ibatis.annotations.*;
+
 import java.util.List;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.ResultMap;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
 
 public interface PersonMapper {
     int countByExample(PersonExample example);
@@ -16,18 +12,18 @@ public interface PersonMapper {
     int deleteByExample(PersonExample example);
 
     @Delete({
-        "delete from Person",
-        "where id = #{id,jdbcType=INTEGER}"
+            "delete from Person",
+            "where id = #{id,jdbcType=INTEGER}"
     })
     int deleteByPrimaryKey(Integer id);
 
     @Insert({
-        "insert into Person (id, name, ",
-        "sex, age, comments, ",
-        "birthDay)",
-        "values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
-        "#{sex,jdbcType=CHAR}, #{age,jdbcType=INTEGER}, #{comments,jdbcType=VARCHAR}, ",
-        "#{birthday,jdbcType=TIMESTAMP})"
+            "insert into Person (id, name, ",
+            "sex, age, comments, ",
+            "birthDay)",
+            "values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, ",
+            "#{sex,jdbcType=CHAR}, #{age,jdbcType=INTEGER}, #{comments,jdbcType=VARCHAR}, ",
+            "#{birthday,jdbcType=TIMESTAMP})"
     })
     int insert(Person record);
 
@@ -36,13 +32,22 @@ public interface PersonMapper {
     List<Person> selectByExample(PersonExample example);
 
     @Select({
-        "select",
-        "id, name, sex, age, comments, birthDay",
-        "from Person",
-        "where id = #{id,jdbcType=INTEGER}"
+            "select",
+            "id, name, sex, age, comments, birthDay",
+            "from Person",
+            "where id = #{id,jdbcType=INTEGER}"
     })
     @ResultMap("BaseResultMap")
     Person selectByPrimaryKey(Integer id);
+
+
+    @Select({
+            "select",
+            "id, name, sex, age, comments, birthDay",
+            "from Person",
+    })
+    List<Person> findAll();
+
 
     int updateByExampleSelective(@Param("record") Person record, @Param("example") PersonExample example);
 
@@ -51,13 +56,15 @@ public interface PersonMapper {
     int updateByPrimaryKeySelective(Person record);
 
     @Update({
-        "update Person",
-        "set name = #{name,jdbcType=VARCHAR},",
-          "sex = #{sex,jdbcType=CHAR},",
-          "age = #{age,jdbcType=INTEGER},",
-          "comments = #{comments,jdbcType=VARCHAR},",
-          "birthDay = #{birthday,jdbcType=TIMESTAMP}",
-        "where id = #{id,jdbcType=INTEGER}"
+            "update Person",
+            "set name = #{name,jdbcType=VARCHAR},",
+            "sex = #{sex,jdbcType=CHAR},",
+            "age = #{age,jdbcType=INTEGER},",
+            "comments = #{comments,jdbcType=VARCHAR},",
+            "birthDay = #{birthday,jdbcType=TIMESTAMP}",
+            "where id = #{id,jdbcType=INTEGER}"
     })
     int updateByPrimaryKey(Person record);
+
+
 }
