@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
-import java.util.List;
 
 @RestController
 @RequestMapping("/home")
@@ -36,14 +35,24 @@ public class IndexController {
 
     @RequestMapping("/test")
     public String test() {
-        List<Person> peoples = personService.findAll();
-        int i = 0;
-        for (Person p : peoples) {
-            p.setName(p.getName() + i);
-            personService.findAll();
-            personService.update(p);
+        long start = System.currentTimeMillis();
+        long end = System.currentTimeMillis();
+        for (int i = 0; i < 10; i++) {
+            start = System.currentTimeMillis();
+//            personService.findOne(1);
+            personService.findAllNoCache();
+            end = System.currentTimeMillis();
+            System.out.println("cacahed:" + (end - start));
         }
-        return "success";
+
+        for (int i = 0; i < 5; i++) {
+            start = System.currentTimeMillis();
+//            personService.findOneNoCache(1);
+            personService.findAllNoCache();
+            end = System.currentTimeMillis();
+            System.out.println("No Cached:" + (end - start));
+        }
+        return "tested";
     }
 }
 
